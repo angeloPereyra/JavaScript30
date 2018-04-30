@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JS + CSS Clock</title>
+  <title>JS + CSS Clock - NEIL</title>
 </head>
 <body>
 
@@ -62,12 +62,42 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
     }
 
   </style>
 
-  <script>
+<script>
+    const base_degree = 90;
+    const second_movement = 360 / 60;
+    const minute_movement = second_movement / 60;
+    const hour_movement = 0.005;
 
+    var animateClock;
+
+    animateClock = function() {
+      var current_time = new Date();
+      //secs
+      var seconds = current_time.getSeconds();
+      var seconds_degree = base_degree +  (seconds * second_movement) + 1;
+      var second_hand = document.querySelector('.second-hand');
+      second_hand.style.transform = `rotate(${seconds_degree}deg)`;
+
+      //minutes
+      var minutes = current_time.getMinutes();
+      var minutes_degree = base_degree + (minutes * 6) + (seconds * minute_movement) + 1;
+      var minute_hand = document.querySelector('.min-hand');
+      minute_hand.style.transform = `rotate(${minutes_degree}deg)`;
+
+      //hours
+      var hours = current_time.getHours();
+      var hours_degree = base_degree + (hours * (360/12)) + (minutes * hour_movement) + 1;
+      var hour_hand = document.querySelector('.hour-hand');
+      hour_hand.style.transform = `rotate(${hours_degree}deg)`;
+
+    }
+    setInterval(animateClock, 1000);
 
   </script>
 </body>
