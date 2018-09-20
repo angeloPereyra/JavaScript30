@@ -46,7 +46,24 @@
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+const articles = ['the', 'a', 'an'];
 
+function trimArticle(str) {
+  let prefix = articles.find(article =>  str.toLowerCase().startsWith(article + ' ')) + ' ';
+  return str.toLowerCase().startsWith(prefix) ? str.slice(prefix.length) : str;
+}
+
+bands.sort((a, b) => {
+  let {i, j} = {i: trimArticle(a).toUpperCase(), j: trimArticle(b).toUpperCase()};
+  return (i > j) ? 1 : j > i ? -1 : 0;
+});
+
+const bandsEl = document.getElementById('bands');
+bands.forEach(band =>  {
+  let bandEl = document.createElement('li');
+  bandEl.textContent = band;
+  bandsEl.appendChild(bandEl);
+});
 </script>
 
 </body>
